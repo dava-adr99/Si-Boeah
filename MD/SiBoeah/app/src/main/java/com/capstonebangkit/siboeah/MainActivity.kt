@@ -1,22 +1,23 @@
 package com.capstonebangkit.siboeah
 
+
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.capstonebangkit.siboeah.ui.theme.SiBoeahTheme
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SiBoeahTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
+                Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
                     SplashScreen(onSplashComplete = { navigateToWelcomeScreen() })
                 }
             }
@@ -51,7 +52,8 @@ fun SplashScreen(onSplashComplete: () -> Unit) {
     ) {
         Text(
             text = "Splash Screen",
-            fontSize = 24.sp
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -62,4 +64,9 @@ fun SplashScreenPreview() {
     SiBoeahTheme {
         SplashScreen(onSplashComplete = {})
     }
+}
+
+@Composable
+fun SiBoeahTheme(content: @Composable () -> Unit) {
+    MaterialTheme(content = content)
 }
