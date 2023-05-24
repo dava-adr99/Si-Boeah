@@ -24,13 +24,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,16 +40,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.*
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -93,47 +87,70 @@ fun HomeScreen() {
             Spacer(Modifier.weight(1f))
             FeatureMenuCard()
             Spacer(Modifier.weight(1f))
-            TipsCard()
+
         }
 
         Box(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .padding(16.dp)
-                .background(Color.Transparent)
+                .align(Alignment.BottomCenter) // Posisi Bottom Bar
+                .padding(24.dp)
+
+
         ) {
             Row(
                 modifier = Modifier
                     .padding(16.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(16.dp))
-                    .shadow(1.dp, shape = RoundedCornerShape(2.dp))
-                    .align(Alignment.Center)
+                    .background(
+                        color = Color.White,
+                        shape = RoundedCornerShape(16.dp)
+                    )
+                    .drawWithContent {
+                        val height = size.height
+                        val shadowHeight = 8.dp.toPx()
+
+                        drawContent()
+
+                        drawRect(
+                            color = Color.Black.copy(alpha = 0.12f),
+                            topLeft = Offset(0f, height),
+                            size = Size(size.width, shadowHeight),
+                        )
+                    }
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
             ) {
-                IconMenu(icon = Icons.Default.Home, contentDescription = "Home", text = "Home" ,
+                IconMenuBottomBar(
+                    icon = R.drawable.mi_home,
+                    contentDescription = "Home",
+                    text = "Home",
                     onClick = {
-                    // Tindakan perpindahan aktivitas ke halaman Pencarian
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                } )
-                IconMenu(icon = Icons.Default.AddCircle, contentDescription = "Gambar", text = "Gambar",
-                onClick = {
-                    // Tindakan perpindahan aktivitas ke halaman Pencarian
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                } )
-                IconMenu(icon = Icons.Default.Search,
+                        // Tindakan perpindahan aktivitas ke halaman Pencarian
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                )
+                IconMenuBottomBar(
+                    icon = R.drawable.mi_image,
+                    contentDescription = "Gambar",
+                    onClick = {
+                        // Tindakan perpindahan aktivitas ke halaman Pencarian
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                )
+                IconMenuBottomBar(
+                    icon = R.drawable.mi_search,
                     contentDescription = "Pencarian",
-                    text = "Pencarian" ,    onClick = {
-                    // Tindakan perpindahan aktivitas ke halaman Pencarian
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                })
+                    onClick = {
+                        // Tindakan perpindahan aktivitas ke halaman Pencarian
+                        val intent = Intent(context, MainActivity::class.java)
+                        context.startActivity(intent)
+                    }
+                )
             }
         }
     }
 }
-
 @Composable
 fun BannerCard(
     images: List<Int>,
@@ -142,10 +159,11 @@ fun BannerCard(
     context: Context,
     onPageChange: (Int) -> Unit
 ) {
+//    CARD BANNER YANG ATAS
     Card(
         modifier = Modifier
             .padding(16.dp)
-            .background(Color.Blue)
+//            .background(Color.Blue)
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
             Image(
@@ -159,7 +177,7 @@ fun BannerCard(
                 count = images.size,
                 activeIndex = currentPage,
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
+                    .align(Alignment.Center)
                     .padding(bottom = 16.dp),
                 activeColor = Color.White,
                 inactiveColor = Color.Gray
@@ -208,37 +226,58 @@ fun HorizontalPagerIndicator(
 @Composable
 fun FeatureMenuCard() {
     val context = LocalContext.current
+    val tipsList = listOf(
+        "Tip 1: Lorem ipsum dolor sit amet",
+        "Tip 2: Consectetur adipiscing elit",
+        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Tip 4: Ut enim ad minim veniam",
+        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+        "Tip 1: Lorem ipsum dolor sit amet",
+        "Tip 2: Consectetur adipiscing elit",
+        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Tip 4: Ut enim ad minim veniam",
+        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
+        "Tip 1: Lorem ipsum dolor sit amet",
+        "Tip 2: Consectetur adipiscing elit",
+        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+        "Tip 4: Ut enim ad minim veniam",
+        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
+    )
 
+    // CARD FITUR YANG BAWAH
     Card(
         modifier = Modifier
             .padding(16.dp)
-            .fillMaxWidth()
-            .background(Color.Green)
+            .fillMaxSize()
+//            .background(Color.Green)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
+                .fillMaxSize()
+
         ) {
             Text(
                 text = "Feature and Menu Card",
                 color = Color.Black,
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row(
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                IconMenu(
-                    icon = Icons.Default.Home,
+                IconMenuFitur(
+                    icon = R.drawable.icon_fitur_pemindai_buah,
                     contentDescription = "Pemindai Buah",
                     text = "Pemindai Buah",
                     onClick = {
-                        val intent = Intent(context, WelcomeActivity::class.java)
+                        val intent = Intent(context, PemindaiBuahActivity::class.java)
                         context.startActivity(intent)
                     }
                 )
-                IconMenu(
-                    icon = Icons.Default.AddCircle,
+                IconMenuFitur(
+                    icon = R.drawable.icon_fitur_pencarian_resep,
                     contentDescription = "Pencarian Resep",
                     text = "Pencarian Resep",
                     onClick = {
@@ -246,8 +285,8 @@ fun FeatureMenuCard() {
                         context.startActivity(intent)
                     }
                 )
-                IconMenu(
-                    icon = Icons.Default.Search,
+                IconMenuFitur(
+                    icon = R.drawable.icon_fitur_artikel_buah,
                     contentDescription = "Artikel Buah",
                     text = "Artikel Buah",
                     onClick = {
@@ -256,64 +295,7 @@ fun FeatureMenuCard() {
                     }
                 )
             }
-        }
-    }
-}
-
-
-@Composable
-fun IconMenu(
-    icon: ImageVector,
-    contentDescription: String,
-    text: String,
-    onClick: () -> Unit
-) {
-    val context = LocalContext.current
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .size(72.dp)
-                .background(color = Color.White, shape = CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            IconButton(onClick = {
-                onClick()
-            }) {
-                Icon(icon, contentDescription)
-            }
-        }
-        Text(
-            text = text,
-            color = Color.Black,
-            fontSize = 12.sp,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-    }
-}
-
-@Composable
-fun TipsCard() {
-    val tipsList = listOf(
-        "Tip 1: Lorem ipsum dolor sit amet",
-        "Tip 2: Consectetur adipiscing elit",
-        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "Tip 4: Ut enim ad minim veniam",
-        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
-    )
-
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Tips menarik hari ini",
                 color = Color.Black,
@@ -326,11 +308,79 @@ fun TipsCard() {
             ) {
                 items(tipsList) { tip ->
                     TipItem(tip)
-                    Divider(modifier = Modifier.padding(vertical = 4.dp))
+                    Divider(modifier = Modifier.padding(vertical = 8.dp)) // JARAK RECYC VIEW LIST
                 }
             }
         }
     }
+}
+
+
+@Composable
+fun IconMenuFitur(
+    icon: Int,
+    contentDescription: String,
+    text: String? = null,
+    onClick: () -> Unit
+) {
+Column(
+    horizontalAlignment = Alignment.CenterHorizontally,
+    modifier = Modifier.padding(12.dp)
+) {
+    Box(
+        modifier = Modifier
+            .background(color = Color.White, shape = CircleShape),
+        contentAlignment = Alignment.Center
+    ) {
+        IconButton(onClick = onClick) {
+            Image(
+                painter = painterResource(icon),
+                contentDescription = contentDescription,
+                modifier = Modifier.size(30.dp)
+                    .fillMaxWidth()
+            )
+        }
+    }
+    if (text != null) {
+        Text(
+            text = text,
+            color = Color.Black,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = 4.dp)
+        )
+    }
+}
+
+}
+
+@Composable
+fun IconMenuBottomBar(
+    icon: Int,
+    contentDescription: String,
+    text: String? = null,
+    onClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(horizontal = 16.dp)
+    ) {
+        Box(
+            modifier = Modifier,
+            contentAlignment = Alignment.Center
+        ) {
+            IconButton(onClick = onClick) {
+                Image(
+                    painter = painterResource(icon),
+                    contentDescription = contentDescription,
+                    modifier = Modifier.size(30.dp)
+                        .fillMaxWidth()
+                )
+            }
+        }
+
+    }
+
 }
 
 @Composable
@@ -342,6 +392,8 @@ fun TipItem(tip: String) {
         modifier = Modifier.padding(vertical = 4.dp)
     )
 }
+
+
 
 @Preview(showBackground = true)
 @Composable

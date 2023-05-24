@@ -2,4 +2,5 @@
     <string name="app_name">siboeah</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_pemindai_buah">PemindaiBuahActivity</string>
 </resources>

@@ -11,6 +11,7 @@ import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,6 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.capstonebangkit.siboeah.ui.theme.HijauMuda
+import com.capstonebangkit.siboeah.ui.theme.HijauTua
+import com.capstonebangkit.siboeah.ui.theme.Kuning
 
 
 class WelcomeActivity : ComponentActivity() {
@@ -42,11 +46,12 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
     val currentSlide = remember { mutableStateOf(0) }
 
     val slides = listOf(
-        WelcomeSlide(R.drawable.page1_logo_master, "Slide 1", Color(0xFF006400)), // Hijau tua
-        WelcomeSlide(R.drawable.page2_illustration, "Slide 2", Color.Yellow), // Kuning
-        WelcomeSlide(R.drawable.page3_illustration, "Slide 3", Color(0xFF98FB98)) // Hijau muda
+        WelcomeSlide(R.drawable.page1_logo_master, "Slide 1", HijauTua), // Warna Hijau tua
+        WelcomeSlide(R.drawable.page2_illustration, "Slide 2", Kuning), // Warna Kuning
+        WelcomeSlide(R.drawable.page3_illustration, "Slide 3", HijauMuda) // Warna Hijau muda
     )
 
+    val buttonColor = slides[currentSlide.value].buttonColor
 
     Column(
         modifier = Modifier
@@ -76,16 +81,23 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                     onStartClick()
                 }
             },
-            modifier = Modifier.wrapContentWidth()
-        ) {
-            if (currentSlide.value < slides.size - 1) {
-                Text(text = "Next")
-            } else {
-                Text(text = "Mulai")
+            modifier = Modifier.wrapContentWidth(),
+            colors = ButtonDefaults.buttonColors(
+                buttonColor,
+                contentColor = Color.White
+            ),
+            content = {
+                if (currentSlide.value < slides.size - 1) {
+                    Text(text = "Next")
+                } else {
+                    Text(text = "Mulai")
+                }
             }
-        }
+        )
     }
 }
+
+
 
 data class WelcomeSlide(val imageRes: Int, val text: String, val buttonColor: Color)
 
