@@ -3,4 +3,6 @@
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_pemindai_buah">PemindaiBuahActivity</string>
+    <string name="title_activity_pencarian_resep">PencarianResepActivity</string>
+    <string name="title_activity_camera_xpemindai_buah">CameraX_PemindaiBuah</string>
 </resources>

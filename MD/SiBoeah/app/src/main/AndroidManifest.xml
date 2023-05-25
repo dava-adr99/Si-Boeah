@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Siboeah"
         tools:targetApi="31">
+        <activity
+            android:name=".CameraX_PemindaiBuahActivity"
+            android:exported="false"
+            android:label="@string/title_activity_camera_xpemindai_buah"
+            android:theme="@style/Theme.Siboeah" />
+        <activity
+            android:name=".PencarianResepActivity"
+            android:exported="false"
+            android:label="@string/title_activity_pencarian_resep"
+            android:theme="@style/Theme.Siboeah" />
         <activity
             android:name=".PemindaiBuahActivity"
             android:exported="false"

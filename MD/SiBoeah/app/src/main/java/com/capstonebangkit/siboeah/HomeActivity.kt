@@ -1,7 +1,6 @@
 package com.capstonebangkit.siboeah
 
 
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -27,16 +26,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,6 +49,15 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.Typography
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 
 
 class HomeActivity : ComponentActivity() {
@@ -223,38 +229,30 @@ fun HorizontalPagerIndicator(
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeatureMenuCard() {
     val context = LocalContext.current
     val tipsList = listOf(
-        "Tip 1: Lorem ipsum dolor sit amet",
-        "Tip 2: Consectetur adipiscing elit",
-        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "Tip 4: Ut enim ad minim veniam",
-        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-        "Tip 1: Lorem ipsum dolor sit amet",
-        "Tip 2: Consectetur adipiscing elit",
-        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "Tip 4: Ut enim ad minim veniam",
-        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat",
-        "Tip 1: Lorem ipsum dolor sit amet",
-        "Tip 2: Consectetur adipiscing elit",
-        "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
-        "Tip 4: Ut enim ad minim veniam",
-        "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat"
-    )
+        TipData(R.drawable.banner1, "Tip 1: Lorem ipsum dolor sit amet", "hashtag1"),
+        TipData(R.drawable.banner2, "Tip 2: Consectetur adipiscing elit", "hashtag2"),
+        TipData(R.drawable.mi_image, "Tip 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", "hashtag3"),
+        TipData(R.drawable.mi_search, "Tip 4: Ut enim ad minim veniam", "hashtag4"),
+        TipData(R.drawable.mi_home, "Tip 5: Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat", "hashtag5"),
+        TipData(R.drawable.logo_splash_screen, "Tip 6: Lorem ipsum dolor sit amet", "hashtag6"),
+        TipData(R.drawable.page1_logo_master, "Tip 7: Consectetur adipiscing elit", "hashtag7"),
+        TipData(R.drawable.page2_illustration, "Tip 8: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua", "hashtag8"),
+        TipData(R.drawable.page3_illustration, "Tip 9: Ut enim ad minim veniam", "hashtag9"),
+       )
 
     // CARD FITUR YANG BAWAH
     Card(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()
-//            .background(Color.Green)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
-                .fillMaxSize()
-
         ) {
             Text(
                 text = "Feature and Menu Card",
@@ -281,7 +279,7 @@ fun FeatureMenuCard() {
                     contentDescription = "Pencarian Resep",
                     text = "Pencarian Resep",
                     onClick = {
-                        val intent = Intent(context, WelcomeActivity::class.java)
+                        val intent = Intent(context, PencarianResepActivity::class.java)
                         context.startActivity(intent)
                     }
                 )
@@ -307,8 +305,12 @@ fun FeatureMenuCard() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(tipsList) { tip ->
-                    TipItem(tip)
-                    Divider(modifier = Modifier.padding(vertical = 8.dp)) // JARAK RECYC VIEW LIST
+                    TipItem(
+                        imageRes = tip.imageRes,
+                        title = tip.title,
+                        hashtag = tip.hashtag
+                    )
+                    Divider(modifier = Modifier.padding(vertical = 8.dp))
                 }
             }
         }
@@ -383,14 +385,44 @@ fun IconMenuBottomBar(
 
 }
 
-@Composable
-fun TipItem(tip: String) {
-    Text(
-        text = tip,
-        color = Color.Black,
-        fontSize = 14.sp,
-        modifier = Modifier.padding(vertical = 4.dp)
+data class TipData(
+    val imageRes: Int,
+//    val imageRes: String,
+    val title: String,
+    val hashtag: String
     )
+@ExperimentalMaterial3Api
+@Composable
+fun TipItem(imageRes: Int, title: String, hashtag: String) {
+    Surface(
+        shape = RoundedCornerShape(8.dp),
+        color = Color.White,
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Image(
+                painter = painterResource(imageRes),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = hashtag,
+                color = Color.Gray,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
 }
 
 
@@ -398,5 +430,5 @@ fun TipItem(tip: String) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+        HomeScreen()
 }
