@@ -18,19 +18,14 @@
         android:theme="@style/Theme.Siboeah"
         tools:targetApi="31">
         <activity
-            android:name=".CameraX_PemindaiBuahActivity"
+            android:name=".PemindaiBuahActivity"
             android:exported="false"
-            android:label="@string/title_activity_camera_xpemindai_buah"
+            android:label="@string/title_activity_pemindai_buah"
             android:theme="@style/Theme.Siboeah" />
         <activity
             android:name=".PencarianResepActivity"
             android:exported="false"
             android:label="@string/title_activity_pencarian_resep"
-            android:theme="@style/Theme.Siboeah" />
-        <activity
-            android:name=".PemindaiBuahActivity"
-            android:exported="false"
-            android:label="@string/title_activity_pemindai_buah"
             android:theme="@style/Theme.Siboeah" />
         <activity
             android:name=".HomeActivity"

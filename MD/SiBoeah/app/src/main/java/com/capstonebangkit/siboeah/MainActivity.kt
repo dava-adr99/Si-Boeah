@@ -1,8 +1,6 @@
 package com.capstonebangkit.siboeah
 
 
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,16 +18,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
-
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.capstonebangkit.siboeah.ui.theme.HijauMuda
 import com.capstonebangkit.siboeah.ui.theme.HijauTua
 import com.capstonebangkit.siboeah.ui.theme.Krem
-import com.capstonebangkit.siboeah.ui.theme.Kuning
-
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
