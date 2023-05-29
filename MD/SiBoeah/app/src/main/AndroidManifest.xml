@@ -21,7 +21,8 @@
             android:name=".PemindaiBuahActivity"
             android:exported="false"
             android:label="@string/title_activity_pemindai_buah"
-            android:theme="@style/Theme.Siboeah" />
+            android:theme="@style/Theme.AppCompat" />
+
         <activity
             android:name=".PencarianResepActivity"
             android:exported="false"
