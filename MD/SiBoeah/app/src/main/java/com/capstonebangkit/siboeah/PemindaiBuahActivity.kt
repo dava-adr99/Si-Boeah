@@ -21,12 +21,17 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 
 class PemindaiBuahActivity : AppCompatActivity() {
@@ -90,6 +95,11 @@ class PemindaiBuahActivity : AppCompatActivity() {
 
                     uploadToFirebaseStorage(image)
 
+                    // fungsi pemanggilan post image
+                    postImageToAPI(image)
+
+
+                    Toast.makeText(applicationContext, "Post Image Sukses", Toast.LENGTH_SHORT).show()
 
                 } else {
                     // Handle error or unsuccessful response
@@ -112,6 +122,7 @@ class PemindaiBuahActivity : AppCompatActivity() {
 
         val scaledImage = Bitmap.createScaledBitmap(thumbnail, imageSize, imageSize, false)
 
+        postImageToAPI(scaledImage)
         kirimImageToAPI(scaledImage)
     }
 
@@ -190,4 +201,56 @@ class PemindaiBuahActivity : AppCompatActivity() {
 
 
 
+    private fun postImageToAPI(image: Bitmap) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://cc-bix2qs6woa-de.a.run.app/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val apiService = retrofit.create(ApiService::class.java)
+
+        val file = createImageFile(image)
+        val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+        val imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+
+        val call: Call<Void> = apiService.postImage(imagePart)
+        call.enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if (response.isSuccessful) {
+                    // Handle successful response
+                    Toast.makeText(applicationContext, "Gambar Berhasil Di Kirim", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    // Handle error or unsuccessful response
+                    Toast.makeText(applicationContext, "Failed Post response", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                // Handle failure
+                Toast.makeText(applicationContext, "Failed to upload image", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun createImageFile(bitmap: Bitmap): File {
+        val file = File(cacheDir, "image.jpg")
+        file.createNewFile()
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+        val bitmapData = bos.toByteArray()
+
+        val fos = FileOutputStream(file)
+        fos.write(bitmapData)
+        fos.flush()
+        fos.close()
+
+        return file
+    }
+
+
 }
+
+
+
+
