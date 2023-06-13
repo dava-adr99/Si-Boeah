@@ -19,12 +19,14 @@ label_object_detection = ['apple', 'orange', 'banana']
 
 # get image from url
 def url_to_image(url):
-	resp = urllib.request.urlopen(url)
-	image = np.asarray(bytearray(resp.read()), dtype="uint8")
-	image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-	return image
+  resp = urllib.request.urlopen(url)
+  image = np.asarray(bytearray(resp.read()), dtype="uint8")
+  image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+
+  return image
 
 def predict(url):
+
   image = url_to_image(url)
   result = object_detection_model(image)
   fruit_name  = []
@@ -37,7 +39,7 @@ def predict(url):
     label_index = int(detect[5])
     label = label_object_detection[label_index]   
     fruit_name.append(label)
-     
+    
     load = image[yA:yB, xA:xB]
     load = load/255.0
     load = cv2.resize(load, (224,224))
@@ -48,16 +50,19 @@ def predict(url):
     index = np.argmax(classes) 
     freshness_level = label_classes[index]
     freshness.append(freshness_level)
+
   return ({"name": fruit_name, "freshness": freshness})   
     
 if __name__ == "__main__":
   import sys
-  
-  if len(sys.argv) < 2:
-    print("get output <url>")
-    sys.exit(1)
-  
-  url = sys.argv[1]
-  output = predict(url)
-  
-  print(output)
+  try:  
+    if len(sys.argv) < 2:
+      print("input url image : pyhton app.py [image_url]")
+      sys.exit(1)
+    
+    url = sys.argv[1]
+    output = predict(url)
+  except Exception as err:
+    print(err)
+  else:
+    print(output)
