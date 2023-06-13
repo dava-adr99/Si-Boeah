@@ -1,5 +1,6 @@
 package com.capstonebangkit.siboeah
 
+import HasilFragment
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +18,7 @@ import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
@@ -180,7 +182,7 @@ class PemindaiBuahActivity : AppCompatActivity() {
                 imageRef.downloadUrl.addOnSuccessListener { uri ->
                     val imageUrl = uri.toString()
                     // Use the URL of the image (e.g., display it in an ImageView)
-                    imageView.setImageURI(uri)
+//                    imageView.setImageURI(uri)
 
                     // Save the image URL to Realtime Database
                     val database = FirebaseDatabase.getInstance()
@@ -219,6 +221,19 @@ class PemindaiBuahActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     // Handle successful response
                     Toast.makeText(applicationContext, "Gambar Berhasil Di Kirim", Toast.LENGTH_SHORT).show()
+
+camera.isVisible = false
+                    gallery.isVisible = false
+                    val namaBuah = "Apel"
+                    val tingkatKesegaran = "Masih Segar"
+                    val energi = "Energi" // Replace with the actual value of energi
+                    val kandungan = "Kandungan" // Replace with the actual value of kandungan
+
+                    val fragment = HasilFragment.newInstance(namaBuah, tingkatKesegaran)
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.hasilFragmentContainer, fragment)
+                        .commit()
+
 
                 } else {
                     // Handle error or unsuccessful response
