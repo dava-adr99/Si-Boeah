@@ -44,7 +44,7 @@ def predict(url):
     z = tf.keras.utils.img_to_array(load)
     z = np.expand_dims(z, axis=0)
     images = np.vstack([z])
-    classes = classification_model.predict(images)
+    classes = classification_model.predict(images, verbose=0)
     index = np.argmax(classes) 
     freshness_level = label_classes[index]
     freshness.append(freshness_level)
