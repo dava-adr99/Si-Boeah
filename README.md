@@ -16,9 +16,9 @@ Go-to Proposal : [Go-to Proposal](https://docs.google.com/presentation/d/1dRF3za
 # Member and Our Linkedlin
 | Name   | Role | LinkedIn    |
 | ------ | ---- | ----------- |
-| Fahrul Firmansyah   | Machine Learning   | <a href="https://www.linkedin.com/in/fahrul-firmansyah-5a1b34237/"><i class="fab fa-linkedin"></i></a>    |
-| Faiqotuzzulfa   | Machine Learning   |  <a href="https://www.linkedin.com/in/faiqotuzzulfa-86b871256/"><i class="fab fa-linkedin"></i></a>   |
-| Nathanael Tenno Phileo Wong Pusaka   | Cloud Computing   |  <a href="https://www.linkedin.com/in/nathanael-tenno-phileo-wong-pusaka-42796a220/"><i class="fab fa-linkedin"></i></a>   |
-| Ayu Wulandari   | Cloud Computing    |  <a href="https://www.linkedin.com/in/ayu-wulandari-17731321b/"><i class="fab fa-linkedin"></i></a>   |
-| Dava Adriansyah   | Mobile Development   | <a href=""><i class="fab fa-linkedin"></i></a>    |
-| Fahmi Ardiansyah   | Mobile Development   | <a href="https://www.linkedin.com/in/fahmi-ardiansyah-759a73179/"><i class="fab fa-linkedin"></i></a> |
+| Fahrul Firmansyah   | Machine Learning   | https://www.linkedin.com/in/fahrul-firmansyah-5a1b34237/    |
+| Faiqotuzzulfa   | Machine Learning   |  https://www.linkedin.com/in/faiqotuzzulfa-86b871256/   |
+| Nathanael Tenno Phileo Wong Pusaka   | Cloud Computing   |  https://www.linkedin.com/in/nathanael-tenno-phileo-wong-pusaka-42796a220/   |
+| Ayu Wulandari   | Cloud Computing    |  https://www.linkedin.com/in/ayu-wulandari-17731321b/   |
+| Dava Adriansyah   | Mobile Development   | -    |
+| Fahmi Ardiansyah   | Mobile Development   | https://www.linkedin.com/in/fahmi-ardiansyah-759a73179/ |
