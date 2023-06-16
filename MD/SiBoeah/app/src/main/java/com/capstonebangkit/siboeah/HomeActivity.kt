@@ -58,15 +58,14 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val searchQuery = intent.getStringExtra("searchQuery") ?: ""
-            HomeScreen(searchQuery)
+            HomeScreen()
         }
     }
 }
 
 @Composable
-fun HomeScreen(searchQuery: String) {
-    var searchQuery by remember { mutableStateOf("") }
+fun HomeScreen() {
+
     val images = listOf(
         R.drawable.banner1, // Gambar untuk slide pertama
         R.drawable.banner2 // Gambar untuk slide kedua
@@ -84,6 +83,10 @@ fun HomeScreen(searchQuery: String) {
     val apiService = retrofit.create(ApiService::class.java)
 
     var tipsList by remember { mutableStateOf<List<TipData>>(emptyList()) }
+
+
+
+
     LaunchedEffect(Unit) {
         try {
             val tips = apiService.getTips()
@@ -105,7 +108,7 @@ fun HomeScreen(searchQuery: String) {
                 currentPage = page
             }
             Spacer(Modifier.weight(1f))
-            FeatureMenuCard(apiService, tipsList, searchQuery)
+            FeatureMenuCard(apiService, tipsList,)
             Spacer(Modifier.weight(1f))
         }
 
@@ -141,32 +144,30 @@ fun HomeScreen(searchQuery: String) {
                     contentDescription = "Home",
                     text = "Home",
                     onClick = {
-                        // Tindakan perpindahan aktivitas ke halaman Pencarian
-                        val intent = Intent(context, MainActivity::class.java)
-                        context.startActivity(intent)
+                        // Tindakan perpindahan aktivitas ke halaman Home
+//                        val intent = Intent(context, MainActivity::class.java)
+//                        context.startActivity(intent)
                     }
                 )
                 IconMenuBottomBar(
                     icon = R.drawable.mi_image,
                     contentDescription = "Gambar",
                     onClick = {
-                        // Tindakan perpindahan aktivitas ke halaman Pencarian
-                        val intent = Intent(context, MainActivity::class.java)
-                        context.startActivity(intent)
+                        // Tindakan perpindahan aktivitas ke halaman Gambar
+//                        val intent = Intent(context, MainActivity::class.java)
+//                        context.startActivity(intent)
                     }
                 )
                 IconMenuBottomBar(
                     icon = R.drawable.mi_search,
                     contentDescription = "Pencarian",
                     onClick = {
-                        // Tindakan perpindahan aktivitas ke halaman Pencarian
-                        val intent = Intent(context, MainActivity::class.java)
-                        intent.putExtra("searchQuery", searchQuery)
-                        context.startActivity(intent)
+                        // FITUR PENCARIAN
                     }
                 )
             }
         }
+
     }
 }
 
@@ -242,17 +243,10 @@ fun HorizontalPagerIndicator(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FeatureMenuCard(apiService: ApiService, tipsList: List<TipData>, searchQuery: String) {
+fun FeatureMenuCard(apiService: ApiService, filteredTipsList: List<TipData>) {
     val context = LocalContext.current
 
-    val filteredTipsList = if (searchQuery.isBlank()) {
-        tipsList
-    } else {
-        tipsList.filter { tip ->
-            tip.title.contains(searchQuery, ignoreCase = true) ||
-                    tip.Tag.contains(searchQuery, ignoreCase = true)
-        }
-    }
+
 
     Card(
         modifier = Modifier
@@ -444,5 +438,5 @@ fun TipItem(Gambar: String, title: String, Tag: String, link: String) {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-        HomeScreen(searchQuery = "")
+        HomeScreen()
 }
